@@ -12,15 +12,13 @@ The `publish.yml` workflow validates that the tag matches `package.json`, reruns
 
 ## First publish only
 
-npm Trusted Publishing cannot create an unclaimed package. Bootstrap `0.1.0` once with a temporary granular npm token:
+npm Trusted Publishing cannot create an unclaimed package. The package was bootstrapped with a temporary granular npm token stored as the `NPM_TOKEN` Actions secret. npm turned that first `v0.1.0` publish of a new package into a staged publish: it created the public `0.0.0-stage` placeholder, but the staged `0.1.0` never appeared for approval and later publishes of `0.1.0` are rejected as "previously staged". `0.1.0` is therefore unavailable, and `0.1.1` is the first release.
 
-1. Create a short-lived granular npm access token with read/write package access and **Bypass 2FA** enabled. The unclaimed package cannot yet be selected individually, so use the narrowest available account-level package scope and shortest practical expiration.
-2. Add it to this GitHub repository as the `NPM_TOKEN` Actions secret.
-3. Push the `v0.1.0` tag. `publish.yml` uses the token and `npm publish --provenance` to create the package with provenance.
-4. Verify `opencode-durable-task-state@0.1.0` from the public registry.
-5. In the package settings on npmjs.com, configure GitHub Actions as a Trusted Publisher for `samiralibabic/opencode-durable-task-state` and workflow filename `publish.yml`. Under Allowed Actions, explicitly permit direct `npm publish`.
-6. Delete the `NPM_TOKEN` repository secret and revoke the temporary npm token.
-7. Restrict traditional token publishing in the npm package settings after the OIDC publisher has been verified.
+Remaining one-time steps after the first release is verified from the public registry:
+
+1. In the package settings on npmjs.com, configure GitHub Actions as a Trusted Publisher for `samiralibabic/opencode-durable-task-state` and workflow filename `publish.yml`. Under Allowed Actions, explicitly permit direct `npm publish`.
+2. Delete the `NPM_TOKEN` repository secret and revoke the temporary npm token.
+3. Restrict traditional token publishing in the npm package settings after the OIDC publisher has been verified.
 
 ## Later publishes
 

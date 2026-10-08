@@ -20,7 +20,7 @@ To pin a release, use an npm version in the plugin spec:
 ```json
 {
   "$schema": "https://opencode.ai/config.json",
-  "plugin": ["opencode-durable-task-state@0.1.0"]
+  "plugin": ["opencode-durable-task-state@0.1.1"]
 }
 ```
 
@@ -60,7 +60,7 @@ The plugin is inactive when `OPENCODE_SUPERVISED=1`, which is reserved for launc
 
 ## Compatibility
 
-Version `0.1.0` targets released OpenCode versions `>=1.18.35 <2` and is tested against `opencode-ai@1.18.35`.
+Version `0.1.1` targets released OpenCode versions `>=1.18.35 <2` and is tested against `opencode-ai@1.18.35`.
 
 The package uses the OpenCode 1.x server-plugin module contract. It does not claim OpenCode 2 compatibility; OpenCode 2 must be tested explicitly before widening the compatibility range.
 
