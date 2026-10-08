@@ -12,9 +12,11 @@ The `publish.yml` workflow validates that the tag matches `package.json`, reruns
 
 ## First publish only
 
-npm Trusted Publishing cannot create an unclaimed package. The package was bootstrapped with a temporary granular npm token stored as the `NPM_TOKEN` Actions secret. npm turned that first `v0.1.0` publish of a new package into a staged publish: it created the public `0.0.0-stage` placeholder, but the staged `0.1.0` never appeared for approval and later publishes of `0.1.0` are rejected as "previously staged". `0.1.0` is therefore unavailable, and `0.1.1` is the first release.
+npm Trusted Publishing cannot create an unclaimed package. The package was bootstrapped with a temporary granular npm token stored as the `NPM_TOKEN` Actions secret. The token needs **Bypass 2FA**; otherwise publishing fails with `EOTP`.
 
-Remaining one-time steps after the first release is verified from the public registry:
+For a new package, npm first published a public `0.0.0-stage` placeholder and held `0.1.0` for several minutes before it appeared on the registry; `0.1.1` was likewise visible about three minutes after its workflow succeeded. During that delay the version did not appear under Staged Packages, and re-publishing it failed with `409 Cannot publish over previously staged version`. Wait for the registry before retrying. `0.1.1` repeats `0.1.0` with no code changes.
+
+Remaining one-time steps:
 
 1. In the package settings on npmjs.com, configure GitHub Actions as a Trusted Publisher for `samiralibabic/opencode-durable-task-state` and workflow filename `publish.yml`. Under Allowed Actions, explicitly permit direct `npm publish`.
 2. Delete the `NPM_TOKEN` repository secret and revoke the temporary npm token.
