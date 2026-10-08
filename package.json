@@ -1,0 +1,49 @@
+{
+  "name": "opencode-durable-task-state",
+  "version": "0.1.0",
+  "description": "Session-scoped durable task snapshots for OpenCode, preserved across compaction.",
+  "type": "module",
+  "exports": {
+    "./server": "./dist/durable-task-state.js"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "clean": "node -e \"require('node:fs').rmSync('dist', { recursive: true, force: true })\"",
+    "build": "npm run clean && tsc -p tsconfig.json",
+    "test": "npm run build && node --test tests/durable-task-state.test.mjs && node tests/packed-plugin.test.mjs",
+    "pack:check": "npm pack --dry-run"
+  },
+  "dependencies": {
+    "@opencode-ai/plugin": "1.18.35"
+  },
+  "devDependencies": {
+    "@types/node": "24.19.1",
+    "opencode-ai": "1.18.35",
+    "typescript": "5.9.3"
+  },
+  "engines": {
+    "opencode": ">=1.18.35 <2"
+  },
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  },
+  "license": "MIT",
+  "author": "Samir Alibabic",
+  "keywords": [
+    "opencode",
+    "opencode-plugin",
+    "task-state",
+    "compaction"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/samiralibabic/opencode-durable-task-state.git"
+  },
+  "bugs": {
+    "url": "https://github.com/samiralibabic/opencode-durable-task-state/issues"
+  },
+  "homepage": "https://github.com/samiralibabic/opencode-durable-task-state#readme"
+}
