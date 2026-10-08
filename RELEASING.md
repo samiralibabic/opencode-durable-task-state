@@ -16,11 +16,16 @@ npm Trusted Publishing cannot create an unclaimed package. The package was boots
 
 For a new package, npm first published a public `0.0.0-stage` placeholder and held `0.1.0` for several minutes before it appeared on the registry; `0.1.1` was likewise visible about three minutes after its workflow succeeded. During that delay the version did not appear under Staged Packages, and re-publishing it failed with `409 Cannot publish over previously staged version`. Wait for the registry before retrying. `0.1.1` repeats `0.1.0` with no code changes.
 
-Remaining one-time steps:
+After the bootstrap, the `NPM_TOKEN` secret was deleted, the temporary tokens were revoked, and GitHub Actions was configured as the Trusted Publisher with publish permission:
 
-1. In the package settings on npmjs.com, configure GitHub Actions as a Trusted Publisher for `samiralibabic/opencode-durable-task-state` and workflow filename `publish.yml`. Under Allowed Actions, explicitly permit direct `npm publish`.
-2. Delete the `NPM_TOKEN` repository secret and revoke the temporary npm token.
-3. Restrict traditional token publishing in the npm package settings after the OIDC publisher has been verified.
+```sh
+npm trust github opencode-durable-task-state \
+  --repo samiralibabic/opencode-durable-task-state --file publish.yml --allow-publish
+```
+
+npm expires a new trust configuration that has not authorized a publish within 48 hours. `0.1.2`, which has no code changes, was the first OIDC publish and validated it. If the configuration ever has to be recreated, publish a release within 48 hours.
+
+Remaining one-time step: restrict traditional token publishing in the npm package settings.
 
 ## Later publishes
 

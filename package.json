@@ -1,6 +1,6 @@
 {
   "name": "opencode-durable-task-state",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Session-scoped durable task snapshots for OpenCode, preserved across compaction.",
   "type": "module",
   "exports": {
