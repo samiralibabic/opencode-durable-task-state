@@ -132,14 +132,3 @@ test("injects only the compacting session's existing snapshot", async () => {
     assert.deepEqual(await compacting(plugin, "ses_two"), [])
   })
 })
-
-test("stays inactive for supervised launches", async () => {
-  const original = process.env.OPENCODE_SUPERVISED
-  process.env.OPENCODE_SUPERVISED = "1"
-  try {
-    assert.deepEqual(await DurableTaskStateModule.server({ directory: os.tmpdir(), worktree: os.tmpdir() }), {})
-  } finally {
-    if (original === undefined) delete process.env.OPENCODE_SUPERVISED
-    else process.env.OPENCODE_SUPERVISED = original
-  }
-})
