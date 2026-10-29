@@ -16,9 +16,6 @@ function projectRoot(worktree: string, directory: string): string {
 }
 
 const server = (async ({ directory, worktree }) => {
-  // The supervised launcher has its own state contract and compaction plugin.
-  if (process.env.OPENCODE_SUPERVISED === "1") return {}
-
   const root = projectRoot(worktree, directory)
 
   return {
@@ -71,7 +68,7 @@ This OpenCode session's durable state path is \`${statePath}\`. For substantial 
 
       output.context.push(`## Durable task state
 
-The ordinary workflow's durable task snapshot for this exact OpenCode session from \`${statePath}\` follows. Preserve its assigned work, approved plan, explicit decisions, scope, status, blockers, progress, relevant paths, and next action. It is this session's authoritative recovery snapshot, not a transcript or a substitute for canonical project documentation.
+The durable task snapshot for this exact OpenCode session from \`${statePath}\` follows. Preserve its assigned work, approved plan, explicit decisions, scope, status, blockers, progress, relevant paths, and next action. It is this session's authoritative recovery snapshot, not a transcript or a substitute for canonical project documentation.
 
 After compaction, the continuing session must reread its snapshot through \`task_state\` before consequential work and reconcile it with any newer instructions in this session. Newer instructions override conflicting snapshot content. Do not use another session's snapshot in its place.
 
